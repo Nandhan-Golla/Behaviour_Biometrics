@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Frequency</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    Password : <input id="text-input" rows="10" cols="50"></input>
+    
+    <button type="submit" onclick="redirectToPage()" id ="done">Submit</button>
+</body>
+    <p id="typing-speed"></p>
+
+    <script>
+        $(document).ready(function() {
+            $('#text-input').keyup(function() {
+                var text = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: "/process_pass",
+                    contentType: "application/json",
+                    data: JSON.stringify({'text': text}),
+                    success: function(response) {
+                        $('#typing-speed').text("Your typing speed is: " + response.typing_speed + " characters per second");
+                    }
+                });
+            });
+        });
+
+        </script>
+        <script>
+                function redirectToPage(){
+                    window.location.href = "/progress";
+                }
+        </script>
+
+       
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Typing Frequency Detector</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    User ID : <input type="text" id = "text-input" rows="10" cols="50" required></input>
+    
+    <button type="submit" onclick="redirectToPage()" id ="done">Submit</button>
+</body>
+    <p id="typing-speed"></p>
+
+    <script>
+        $(document).ready(function() {
+            $('#text-input').keyup(function() {
+                var text = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: "/process_text",
+                    contentType: "application/json",
+                    data: JSON.stringify({'text': text}),
+                    success: function(response) {
+                        $('#typing-speed').text("Your typing speed is: " + response.typing_speed + " characters per second");
+                    }
+                });
+            });
+        });
+
+        </script>
+        <script>
+                function redirectToPage(){
+                    window.location.href = "/process";
+                }
+        </script>
+
+       
+</body>
+</html>
